@@ -13,4 +13,8 @@ public class SplashScreen extends BaseScreen{
     public String getCurrentVersion() {
         return versionTextView.getText();
     }
+
+    public AuthenticationScreen goToAuthenticationScreen(){
+        return new AuthenticationScreen(driver);
+    }
 }

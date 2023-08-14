@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.nio.file.LinkPermission;
+
 public class AuthenticationScreen extends BaseScreen{
     public AuthenticationScreen(AppiumDriver<MobileElement> driver){
         super(driver);
@@ -11,29 +13,38 @@ public class AuthenticationScreen extends BaseScreen{
 
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/action_bar']/android.view.ViewGroup")
     MobileElement activityViewText;
-    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/inputEmail']/android.view.ViewGroup")
-    MobileElement emailViewText;
-    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/inputPassword']/android.view.ViewGroup")
-    MobileElement passwordViewText;
-    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/regBtn']/android.view.ViewGroup")
-    MobileElement ButtonRegistrationViewText;
-    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/loginBtn']/android.view.ViewGroup")
-    MobileElement ButtonPasswordViewText;
+    @FindBy(id = "com.sheygam.contactapp:id/inputEmail")
+    MobileElement inputEmail;
+    @FindBy(id = "com.sheygam.contactapp:id/inputPassword")
+    MobileElement inputPassword;
+    @FindBy(id = "com.sheygam.contactapp:id/regBtn")
+    MobileElement ButtonRegistration;
+    @FindBy(id = "com.sheygam.contactapp:id/loginBtn")
+    MobileElement ButtonLogin;
 
-    public String getCurrentVersion() {
-        return activityViewText.getText();
+    public AuthenticationScreen fillEmail(String email) {
+        waitElement(inputEmail, 5);
+        type(inputEmail, email);
+        return this;
     }
 
-    public String getCurrentEmail() {
-        return emailViewText.getText();
+    public AuthenticationScreen fillPassword(String password) {
+        waitElement(inputPassword, 1);
+        type(inputPassword, password);
+        return this;
     }
-    public String getCurrentPassword() {
-        return passwordViewText.getText();
+
+    public ContactListScreen submitLogin() {
+        ButtonLogin.click();
+        return new ContactListScreen(driver);
     }
-    public String getCurrentButtonRegistration() {
-        return ButtonRegistrationViewText.getText();
+
+    public ContactListScreen submitRegistration() {
+        ButtonRegistration.click();
+        return new ContactListScreen(driver);
     }
-    public String getCurrentuttonPasswor() {
-        return ButtonPasswordViewText.getText();
+    public AuthenticationScreen submitRegistrationNegative() {
+        ButtonRegistration.click();
+        return this;
     }
 }
