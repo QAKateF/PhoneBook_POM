@@ -22,16 +22,16 @@ public class ContactListScreen extends BaseScreen{
     MobileElement moreOptions;
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/add_contact_btn']")
     MobileElement addContactBtn;
-    @FindBy(xpath = "//*[@resource-id='android:id/button1']")
-    MobileElement yesBtn;
-    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/emptyTxt']")
-    MobileElement emptyTxt;
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/rowContainer']")
     List<MobileElement> contacts;
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/rowName']")
     List<MobileElement> names;
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/rowPhone']")
     List<MobileElement> phones;
+    @FindBy(xpath = "//*[@resource-id='android:id/button1']")
+    MobileElement yesBtn;
+    @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/emptyTxt']")
+    MobileElement emptyTxt;
 
 
     public boolean isContactListActivityPresent(){
@@ -51,6 +51,16 @@ public class ContactListScreen extends BaseScreen{
     }
 
     public boolean isContactAdded(Contact contact) {
-        return ;
+        boolean checkName = checkContainsText(names, contact.getName() + " " + contact.getLastName());
+        boolean checkPhone = checkContainsText(phones, contact.getPhone());
+        return checkPhone && checkPhone;
+    }
+
+    public boolean checkContainsText(List<MobileElement> list, String text){
+        for (MobileElement element : list){
+            if(element.getText().contains(text)){
+                return true;
+            }
+        }  return false;
     }
 }

@@ -23,6 +23,6 @@ public class RegistrationTests extends AppiumConfiguration {
                 .fillEmail("cat_" + i + "gm.com")
                 .fillPassword("abcD" + i + "5$")
                 .submitRegistration()
-                .isContactListActivityPresent());
+                .isErrorMessageContainsText("{username=must be a well-formed email address}"));
     }
 }

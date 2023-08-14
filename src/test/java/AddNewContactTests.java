@@ -28,8 +28,7 @@ public class AddNewContactTests extends AppiumConfiguration {
                 .address("Tel-Aviv")
                 .description("Friend")
                 .build();
-        Assert.assertTrue(
-                new ContactListScreen(driver)
+        Assert.assertTrue(new ContactListScreen(driver)
                         .openContactForm()
                         .fillContactForm(contact)
                         .submitContact()

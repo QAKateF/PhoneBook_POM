@@ -45,7 +45,7 @@ public class BaseScreen {
     public boolean isErrorMessageContainsText(String text){
         Alert alert = new WebDriverWait(driver, 5)
                 .until(ExpectedConditions.alertIsPresent());
-        driver.switchTo().alert();
+        driver.switchTo().alert(); //to read text
         boolean res = alert.getText().contains(text);
         alert.accept();
         return res;

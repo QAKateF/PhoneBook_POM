@@ -3,6 +3,7 @@ package screens;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.annotations.Test;
 
 import java.nio.file.LinkPermission;
 
@@ -21,6 +22,10 @@ public class AuthenticationScreen extends BaseScreen{
     MobileElement ButtonRegistration;
     @FindBy(id = "com.sheygam.contactapp:id/loginBtn")
     MobileElement ButtonLogin;
+    @FindBy(id = "android:id/message")
+    MobileElement errorTextView;
+    @FindBy(id = "android:id/button1")
+    MobileElement okBtn;
 
     public AuthenticationScreen fillEmail(String email) {
         waitElement(inputEmail, 5);
@@ -47,4 +52,10 @@ public class AuthenticationScreen extends BaseScreen{
         ButtonRegistration.click();
         return this;
     }
+
+    public boolean isWrongMessageHasText(String text) {
+       //return errorTextView.getText().contains(text);
+        return isErrorMessageContainsText(text);
+    }
+
 }
