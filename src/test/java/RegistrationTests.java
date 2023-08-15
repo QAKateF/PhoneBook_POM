@@ -10,7 +10,7 @@ public class RegistrationTests extends AppiumConfiguration {
     public void RegistrationPositive(){
         Assert.assertTrue(new SplashScreen(driver)
                 .goToAuthenticationScreen()
-                .fillEmail("cat_" + i + "@gm.com")
+                .fillEmail("caat_" + i + "@gm.com")
                 .fillPassword("abcD" + i + "5$")
                 .submitRegistration()
                 .isContactListActivityPresent());

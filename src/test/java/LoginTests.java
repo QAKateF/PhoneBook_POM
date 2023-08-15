@@ -17,16 +17,6 @@ public class LoginTests extends AppiumConfiguration {
                 .isContactListActivityPresent());
     }
 
-//    @Test
-//    public void LoginNegativeWrongEmail(){
-//        Assert.assertTrue(new SplashScreen(driver)
-//                .goToAuthenticationScreen()
-//                .fillEmail("qwerty@gm.com")
-//                .fillPassword("abcD123$")
-//                .submitLogin()
-//                .isContactListActivityPresent());
-//    }
-
     @AfterMethod
     public void postcodition(){
         if(new ContactListScreen(driver).isContactListActivityPresent()){

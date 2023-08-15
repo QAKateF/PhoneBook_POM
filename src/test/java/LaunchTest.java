@@ -1,7 +1,6 @@
 import config.AppiumConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import screens.AuthenticationScreen;
 import screens.SplashScreen;
 
 public class LaunchTest extends AppiumConfiguration {
