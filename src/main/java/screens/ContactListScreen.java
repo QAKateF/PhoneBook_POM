@@ -7,10 +7,9 @@ import io.appium.java_client.touch.offset.PointOption;
 import models.Contact;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
 
+import java.sql.SQLOutput;
 import java.util.List;
-import java.util.Random;
 
 public class ContactListScreen extends BaseScreen{
 
@@ -56,6 +55,16 @@ public class ContactListScreen extends BaseScreen{
 
     public boolean isContactAdded(Contact contact) {
         boolean checkName = checkContainsText(names, contact.getName() + " " + contact.getLastName());
+        boolean checkPhone = checkContainsText(phones, contact.getPhone());
+        return checkName && checkPhone;
+    }
+
+    public boolean isContactAddedScrolling(Contact contact) {
+        String lastNameInList = contact.getName() + " " + contact.getLastName();
+        while(!names.get(7).getText().contains(lastNameInList)) {
+            scrolling();
+        }
+        boolean checkName = checkContainsText(names, lastNameInList);
         boolean checkPhone = checkContainsText(phones, contact.getPhone());
         return checkName && checkPhone;
     }
@@ -144,6 +153,23 @@ public class ContactListScreen extends BaseScreen{
         Contact contact = new ViewContactScreen(driver).viewContactObject();
         driver.navigate().back();
         return contact.toString().contains(text);
+    }
+
+    public ContactListScreen scrolling(){
+        waitElement(addContactBtn, 5);
+        MobileElement contactScrollingStart = contacts.get(7);
+        MobileElement contactScrollingEnd = contacts.get(0);
+        Rectangle rectStart = contactScrollingStart.getRect();
+        Rectangle rectEnd = contactScrollingEnd.getRect();
+        int xStart = rectStart.getX() + rectStart.getWidth() / 2;
+        int yStart = rectStart.getY() + rectStart.getHeight() / 2;
+        int xEnd = rectEnd.getX() + rectEnd.getWidth() / 2;
+        int yEnd = rectEnd.getY() + rectEnd.getHeight() / 2;
+        TouchAction<?> touchAction = new TouchAction<>(driver);
+        touchAction.longPress(PointOption.point(xStart, yStart))
+                .moveTo(PointOption.point(xEnd, yEnd)).release().perform();
+        pause(3000);
+        return new ContactListScreen(driver);
     }
 
 }
