@@ -34,7 +34,7 @@ public class AddNewContactTests extends AppiumConfiguration {
                         .isContactAdded(contact));
     }
     @Test
-    public void addNewContact_Scrolling_Positive(){
+    public void addNewContact_withScrolling_Positive(){
         Contact contact = Contact.builder()
                 .name("Jack_" + i)
                 .lastName("Smit")

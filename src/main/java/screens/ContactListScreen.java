@@ -59,16 +59,6 @@ public class ContactListScreen extends BaseScreen{
         return checkName && checkPhone;
     }
 
-    public boolean isContactAddedScrolling(Contact contact) {
-        String lastNameInList = contact.getName() + " " + contact.getLastName();
-        while(!names.get(7).getText().contains(lastNameInList)) {
-            scrolling();
-        }
-        boolean checkName = checkContainsText(names, lastNameInList);
-        boolean checkPhone = checkContainsText(phones, contact.getPhone());
-        return checkName && checkPhone;
-    }
-
     public boolean checkContainsText(List<MobileElement> list, String text){
         for (MobileElement element : list){
             if(element.getText().contains(text)){
@@ -157,19 +147,29 @@ public class ContactListScreen extends BaseScreen{
 
     public ContactListScreen scrolling(){
         waitElement(addContactBtn, 5);
-        MobileElement contactScrollingStart = contacts.get(7);
+        MobileElement contactScrollingStart = contacts.get(contacts.size() - 1);
         MobileElement contactScrollingEnd = contacts.get(0);
         Rectangle rectStart = contactScrollingStart.getRect();
         Rectangle rectEnd = contactScrollingEnd.getRect();
-        int xStart = rectStart.getX() + rectStart.getWidth() / 2;
-        int yStart = rectStart.getY() + rectStart.getHeight() / 2;
-        int xEnd = rectEnd.getX() + rectEnd.getWidth() / 2;
-        int yEnd = rectEnd.getY() + rectEnd.getHeight() / 2;
+        int x = rectStart.getX() + rectStart.getWidth() / 2;
+        int y = rectStart.getY() + rectStart.getHeight() / 2;
         TouchAction<?> touchAction = new TouchAction<>(driver);
-        touchAction.longPress(PointOption.point(xStart, yStart))
-                .moveTo(PointOption.point(xEnd, yEnd)).release().perform();
+        touchAction.longPress(PointOption.point(x, y))
+                .moveTo(PointOption.point(x, 0)).release().perform();
         pause(3000);
-        return new ContactListScreen(driver);
+        return this;
     }
+    public boolean isContactAddedScrolling(Contact contact) {
+        String lastNameInList = contact.getName() + " " + contact.getLastName();
+        String lastPhoneInList = contact.getPhone();
+        int size = contacts.size() - 1;
+        while(!names.get(size - 1).getText().contains(lastNameInList)) {
+            scrolling();
+        }
+        boolean checkName = checkContainsText(names, lastNameInList);
+        boolean checkPhone = checkContainsText(phones, lastPhoneInList);
+        return checkName && checkPhone;
+    }
+
 
 }
